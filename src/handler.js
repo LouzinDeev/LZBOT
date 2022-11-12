@@ -1,8 +1,8 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const lib = require("discord.js");
 exports.handCommands = () => {
     const slashCommands = require("./slashCommands.js");
-    const fs = require('node:fs');
-    const path = require('node:path');
-    const lib = require("discord.js");
     bot.commands = new lib.Collection();
     const commandsPath = path.join(__dirname, 'commands');
     const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -16,6 +16,21 @@ exports.handCommands = () => {
             console.log("Succefully add new command");
         } else {
             console.log(`[AVISO] O comando em  ${filePath} nao tem  "data" ou "execute".`);
+        }
+    }
+};
+
+exports.handEvents = () => {
+    const eventsPath = path.join(__dirname, 'events');
+    const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+    for (const file of eventFiles) {
+        const filePath = path.join(eventsPath, file);
+        const event = require(filePath);
+        if (event.once) {
+            bot.once(event.name, (...args) => event.execute(...args));
+        } else {
+            bot.on(event.name, (...args) => event.execute(...args));
         }
     }
 };
