@@ -2,8 +2,7 @@
 const bconfig = require("../bot_config.json");
 const deps = require("./deps.json");
 const lib = require("discord.js");
-
-global.bot = new lib.Client({ intents: [lib.GatewayIntentBits.Guilds] });
+global.bot = new lib.Client({ intents: [lib.GatewayIntentBits.Guilds, lib.GatewayIntentBits.GuildMembers] });
 
 const handler = require("./handler.js");
 

@@ -1,4 +1,5 @@
 const lib = require("discord.js");
+const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
 	name: lib.Events.InteractionCreate,
@@ -18,5 +19,5 @@ module.exports = {
             console.error(error);
             await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
         }
-	},
+	}
 };
